@@ -18,7 +18,7 @@ CREATE TABLE user
 	yy_num varchar(16),
 
 	primary key(user_id),
-	unique key(email)
+	unique(email)
 ) engine=innodb default charset=utf8;
 
 CREATE TABLE user_token
@@ -36,7 +36,7 @@ CREATE TABLE user_resetpw
     code char(32) not null,
     create_date timestamp not null default current_timestamp,
     primary key(user_id),
-    unique key(email)
+    unique(email)
 ) engine=innodb default charset=utf8;
 
 
