@@ -124,7 +124,7 @@ CREATE TABLE hero_skill
 	hero_id int unsigned not null,
 	
 	skill_name char(64) not null,
-	skill_icon char(64) not null,
+	skill_icon char(128) not null,
 	skill_seq tinyint not null default 0,
 	skill_type tinyint not null default 0,
 	skill_mp char(32) not null,

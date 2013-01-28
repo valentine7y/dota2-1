@@ -16,7 +16,7 @@
 
 			<div>
 				<label for="skill_icon">技能图标</label>
-				<input id="skill_icon" name="skill_icon" type="text" maxlength="64" />	
+				<input id="skill_icon" name="skill_icon" type="text" maxlength="128" />	
 			</div>
 			
 			<div>

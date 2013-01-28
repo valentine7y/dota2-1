@@ -7,7 +7,7 @@ if(isset($_GET['hero_id']) && !empty($_GET['hero_id']) && is_int(intval($_GET['h
 	{
 		$title= $hero->hero_nickname;
 		include ('../../lib/view/header.php');
-		print_r($hero);
+		include ('../../lib/view/show_hero.php');
 		include ('../../lib/view/footer.php');
 		exit();
 	}
@@ -18,7 +18,7 @@ else if(isset($_GET['hero_name']) && !empty($_GET['hero_name']) && is_int(intval
 	{
 		$title= $hero->hero_nickname;
 		include ('../../lib/view/header.php');
-		print_r($hero);
+		include ('../../lib/view/show_hero.php');
 		include ('../../lib/view/footer.php');
 		exit();
 	}

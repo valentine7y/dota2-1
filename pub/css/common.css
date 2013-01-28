@@ -1,3 +1,9 @@
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote 
+{
+    margin: 0;
+    padding: 0;
+}
+
 html 
 {
 }
@@ -71,7 +77,7 @@ li
 {
 	margin-left: 20px;
 	float:left;
-	background: url("/images/site/logo.jpg") no-repeat scroll 0 0 transparent;
+/*	background: url("/images/site/logo.jpg") no-repeat scroll 0 0 transparent; */
 	background-size: 70%; 
 	height: 60px;
 	overflow: hidden;
@@ -199,6 +205,89 @@ li
 	text-align: center;
 }
 
+.hero-pic
+{
+	float: left;
+	width: 260px;
+}
+
+
+
+.hero-name
+{
+	display: inline;
+	margin-left: 8px;
+	float: left;
+
+}
+
+.hero-name h1 {
+    font-size: 24px;
+    font-weight: bold;
+    height: 36px;
+    line-height: 36px;
+}
+
+.hero-enickname
+{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal !important;
+    height: 36px;
+    line-height: 36px;
+}
+
+.hero-cname
+{
+    font-size: 18px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.hero-ename{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal !important;
+    height: 20px;
+    line-height: 20px;
+}
+
+.hero-story
+{
+	float: right;
+	width: 400px;
+	font-size: 12px;
+	display: inline;
+	text-indent: 2em;
+}
+
+.hero-motto
+{
+	float: left;
+	width: 250px;
+    font-size: 12x;
+    font-style: italic;
+    line-height: 16px;
+}
+
+.hero-skill-icon
+{
+	float: left;
+	display: block;
+}
+
+.hero-skill-icon li
+{
+	float: left;
+}
+
+.hero-skill-icon img
+{
+	margin-right: 8px;
+	height: 45px;
+	width: 45px;
+}
+
 #wrapper #content .aside
 {
 	float: left;
@@ -222,3 +311,17 @@ li
 }
 	
 
+.red 
+{
+	color: #9C3021 !important;
+}
+
+.green
+{
+     color: #4A928F !important;
+}
+
+.yellow
+{
+	color: #CC9999 !important;
+}

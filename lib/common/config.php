@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Chongqing');
 
 define('BASE_URL', "http://" . $_SERVER['HTTP_HOST'] . "/");
 define ('DOMAIN_MAIN', "http://" . $_SERVER['HTTP_HOST'] . "/");
-define ('DOMAIN_IMG', "http://" . $_SERVER['HTTP_HOST'] . "/img/");
+define ('DOMAIN_IMAGES', "http://" . $_SERVER['HTTP_HOST'] . "/");
 define ('DOMAIN_JS', "http://". $_SERVER['HTTP_HOST'] . "/js/");
 define ('DOMAIN_CSS', "http://". $_SERVER['HTTP_HOST'] . "/css/");
 

@@ -9,7 +9,7 @@ require_once('../../lib/common/util.php');
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> <?php echo $title; ?> </title>
   <link href="<?php echo DOMAIN_CSS;?>common.css" rel="stylesheet" type="text/css" />
-  <link rel="shortcut icon" href="<?php echo DOMAIN_MAIN;?>favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="<?php echo DOMAIN_MAIN;?>favicon.ico" type="image/x-icon" /> 
 <!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 	  <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 -->
