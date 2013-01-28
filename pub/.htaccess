@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule    ^heros/([0-9]+)/?$    hero/show_hero.php?hero_id=$1    [NC,L]    # Handle hero request 
+RewriteRule    ^heros/([A-Za-z]+)/?$    hero/show_hero.php?hero_name=$1    [NC,L]    # Handle hero request 
+ErrorDocument 404 /404.php
+
+

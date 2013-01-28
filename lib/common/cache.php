@@ -272,13 +272,3 @@ class Cache_redis
 }
 
 ?>
-
-
-
-
-
-
-
-
-
-

@@ -2,13 +2,14 @@
 require_once('../../lib/common/config.php');
 require_once('../../lib/common/util.php');
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title> <?php echo $title; ?> </title>
   <link href="<?php echo DOMAIN_CSS;?>common.css" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="<?php echo DOMAIN_MAIN;?>favicon.ico" type="image/x-icon">
 <!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 	  <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
 -->

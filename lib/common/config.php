@@ -37,9 +37,6 @@ define('USE_CACHE', 1);		//whether use cache
 
 //Log
 define('LOG_LEVEL', 0);
-define('LOG_DEBUG', 0);
-define('LOG_WARNING', 1);
 define('LOG_OUTPUT', 0);
 
 ?>
-

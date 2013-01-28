@@ -108,7 +108,7 @@ class Hero
 				$this->hero_sight_day = $row['hero_sight_day'];
 				$this->hero_sight_night = $row['hero_sight_night'];
 				$this->hero_move_speed = $row['hero_move_speed'];
-				$this->hero_missile_speed = $row['hero_missle_speed'];
+				$this->hero_missile_speed = $row['hero_missile_speed'];
 				$this->hero_attack_anim1 = $row['hero_attack_anim1'];
 				$this->hero_attack_anim2 = $row['hero_attack_anim2'];
 				$this->hero_cast_anim1 = $row['hero_cast_anim1'];
@@ -260,4 +260,3 @@ class Hero_skill
 
 }
 ?>
-

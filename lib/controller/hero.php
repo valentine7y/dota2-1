@@ -2,7 +2,6 @@
 require_once('../../lib/model/hero.php');
 require_once('../../lib/common/util.php');
 
-
 function add_hero()
 {
 	$hero = new Hero();

@@ -103,4 +103,3 @@ class DB_pdo
 		return $this->_pdo->lastInsertId(); 
 	}
 }
-
