@@ -113,6 +113,7 @@ class Hero
 				$this->hero_attack_anim2 = $row['hero_attack_anim2'];
 				$this->hero_cast_anim1 = $row['hero_cast_anim1'];
 				$this->hero_cast_anim2 = $row['hero_cast_anim2'];
+				$this->hero_attack_time = $row['hero_attack_time'];
 				$this->hero_motto = $row['hero_motto'];
 				$this->hero_story = $row['hero_story'];
 				$this->hero_skills = Hero_skill::load_by_hero_id($this->hero_id);

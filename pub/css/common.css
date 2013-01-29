@@ -1,4 +1,4 @@
-body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote 
+body, p, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote 
 {
     margin: 0;
     padding: 0;
@@ -63,6 +63,11 @@ li
 	list-style-type: none;
 	list-style-position: outside;
 	list-style-image: none;
+}
+
+.clearfix
+{
+	clear: both;
 }
 
 .top-nav
@@ -205,6 +210,13 @@ li
 	text-align: center;
 }
 
+.basic-info
+{
+	height: 250px;
+	padding-bottom: 20px;
+	border-bottom: 3px solid #FFEEEE;
+}
+
 .hero-pic
 {
 	float: left;
@@ -286,6 +298,11 @@ li
 	margin-right: 8px;
 	height: 45px;
 	width: 45px;
+}
+
+
+.hero-prop
+{
 }
 
 #wrapper #content .aside
