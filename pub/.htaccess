@@ -1,6 +1,12 @@
 RewriteEngine on
-RewriteRule    ^heros/([0-9]+)/?$    hero/show_hero.php?hero_id=$1    [NC,L]    # Handle hero request 
-RewriteRule    ^heros/([A-Za-z]+)/?$    hero/show_hero.php?hero_name=$1    [NC,L]    # Handle hero request 
+
+RewriteRule    ^hero/add_hero/?$    hero/add_hero.php    [NC,L]    # Handle hero request 
+RewriteRule    ^hero/modify_hero/([0-9]+)/?$    hero/modify_hero.php?hero_id=$1    [NC,L]   
+RewriteRule    ^hero/add_skill/?$    hero/add_skill.php    [NC,L]    # Handle hero request 
+RewriteRule    ^hero/modify_skill/([0-9]+)/?$    hero/modify_skill.php?skill_id=$1    [NC,L]  
+
+RewriteRule    ^hero/([0-9]+)/?$    hero/show_hero.php?hero_id=$1    [NC,L]    # Handle hero request 
+RewriteRule    ^hero/([A-Za-z]+)/?$    hero/show_hero.php?hero_name=$1    [NC,L]    # Handle hero request 
 ErrorDocument 404 /404.php
 
 

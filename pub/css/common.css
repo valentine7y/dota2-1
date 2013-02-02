@@ -1,12 +1,13 @@
+html 
+{
+}
+
 body, p, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote 
 {
     margin: 0;
     padding: 0;
 }
 
-html 
-{
-}
 
 body 
 {
@@ -65,9 +66,29 @@ li
 	list-style-image: none;
 }
 
-.clearfix
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+
+.red 
 {
-	clear: both;
+	color: #9C3021 !important;
+}
+
+.green
+{
+     color: #4A928F !important;
+}
+
+.yellow
+{
+	color: #CC9999 !important;
 }
 
 .top-nav
@@ -82,7 +103,7 @@ li
 {
 	margin-left: 20px;
 	float:left;
-/*	background: url("/images/site/logo.jpg") no-repeat scroll 0 0 transparent; */
+	background: url("/images/logo.gif") no-repeat scroll 0 0 transparent; */
 	background-size: 70%; 
 	height: 60px;
 	overflow: hidden;
@@ -186,7 +207,7 @@ li
 
 .basic-form .basic-textarea {
     width: 460px;
-	height: 300px;
+	height: 200px;
 }
 
 .basic-form .form-submit
@@ -210,26 +231,57 @@ li
 	text-align: center;
 }
 
-.basic-info
+.hero-info
 {
-	height: 250px;
 	padding-bottom: 20px;
-	border-bottom: 3px solid #FFEEEE;
+	border-bottom: 1px solid #FFEEEE;
+	margin: 0 0 10px 0;
 }
 
-.hero-pic
+.hero-left
 {
 	float: left;
-	width: 260px;
+	width: 220px;
 }
 
+.hero-pic img
+{
+	width:220px;
+	height: 124px;
+}
+
+
+.hero-motto
+{
+    font-size: 12px;
+    font-style: italic;
+    line-height: 16px;
+	margin:5px 0 5px 0;
+}
+
+.hero-skill-icon li
+{
+	float: left;
+}
+
+.hero-skill-icon img
+{
+	margin-right: 8px;
+	height: 45px;
+	width: 45px;
+}
+
+
+.hero-right
+{
+	float: right;
+	width: 440px;
+}
 
 
 .hero-name
 {
-	display: inline;
 	margin-left: 8px;
-	float: left;
 
 }
 
@@ -256,7 +308,8 @@ li
     line-height: 20px;
 }
 
-.hero-ename{
+.hero-ename
+{
     font-size: 14px;
     font-style: italic;
     font-weight: normal !important;
@@ -266,44 +319,67 @@ li
 
 .hero-story
 {
-	float: right;
-	width: 400px;
 	font-size: 12px;
-	display: inline;
 	text-indent: 2em;
-}
-
-.hero-motto
-{
-	float: left;
-	width: 250px;
-    font-size: 12x;
-    font-style: italic;
-    line-height: 16px;
-}
-
-.hero-skill-icon
-{
-	float: left;
-	display: block;
-}
-
-.hero-skill-icon li
-{
-	float: left;
-}
-
-.hero-skill-icon img
-{
-	margin-right: 8px;
-	height: 45px;
-	width: 45px;
+	padding-right: 10px;
 }
 
 
 .hero-prop
 {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #FFEEEE;
+	margin: 0 0 10px 0;
 }
+
+
+.hero-skill li
+{
+	margin-bottom: 40px;
+}
+
+.hero-skill .skill-icon
+{
+	float: left;
+	width: 120px;
+}
+
+.hero-skill .skill-detail
+{
+	float: left;
+	width: 520px;
+}
+
+.skill-icon img
+{
+	width: 70px;
+	height: 70px;
+}
+
+.skill-icon-name
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.skill-type
+{
+	font-size: 11px;
+}
+
+.skill-hint
+{
+	font-size: 12px;
+	padding-top: 10px;
+}
+
+.skill-effect
+{
+	font-size: 12px;
+	padding-top: 10px;
+	color: #EB9248;
+}
+
 
 #wrapper #content .aside
 {
@@ -328,17 +404,3 @@ li
 }
 	
 
-.red 
-{
-	color: #9C3021 !important;
-}
-
-.green
-{
-     color: #4A928F !important;
-}
-
-.yellow
-{
-	color: #CC9999 !important;
-}

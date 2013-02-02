@@ -34,27 +34,27 @@
 
 			<div>
 				<label for="skill_mp">技能耗蓝</label>
-				<input id="skill_mp" name="skill_mp" type="text" maxlength="64" > 
+				<input id="skill_mp" name="skill_mp" type="text" maxlength="64" /> 
 			</div>
 			
 			<div>
 				<label for="skill_cd">技能cd</label>
-				<input id="skill_cd" name="skill_cd" type="text" maxlength="64" > 
+				<input id="skill_cd" name="skill_cd" type="text" maxlength="64" /> 
 			</div>
 			
 			<div>
 				<label for="skill_scope">作用范围</label>
-				<input id="skill_scope" name="skill_scope" type="text" maxlength="64" > 
+				<input id="skill_scope" name="skill_scope" type="text" maxlength="64" /> 
 			</div>
 
 			<div>
 				<label for="skill_target">作用目标</label>
-				<input id="skill_target" name="skill_target" type="text" maxlength="64" > 
+				<input id="skill_target" name="skill_target" type="text" maxlength="64"/> 
 			</div>
 			
 			<div>
 				<label for="skill_dmg_type">伤害类型</label>
-				<input id="skill_dmg_type" name="skill_dmg_type" type="text" maxlength="64" > 
+				<input id="skill_dmg_type" name="skill_dmg_type" type="text" maxlength="64" /> 
 			</div>
 			
 			<div>

@@ -71,6 +71,24 @@ class Hero
 
 	}
 
+	public function update()
+	{
+		$sql = 'update hero set hero_name=?, hero_nickname=?, hero_enickname=?, hero_cname=?, hero_ename=?, hero_icon=?, hero_prop_icon=?, hero_hp=?, 
+			hero_mp=?, hero_str=?, hero_lvlup_str=?, hero_agi=?, hero_lvlup_agi=?, hero_int=?, hero_lvlup_int=?, hero_attack_min=?, hero_attack_max=?, 
+			hero_armor=?, hero_attack_range=?, hero_sight_day=?, hero_sight_night=?, hero_move_speed=?, hero_missile_speed=?, hero_attack_anim1=?, 
+			hero_attack_anim2=?, hero_cast_anim1=?, hero_cast_anim2=?, hero_attack_time=?, hero_motto=?, hero_story=? where hero_id=?'; 
+
+		$bind_param = array('sssssssiiidididiidiiiiidddddssi', $this->hero_name, $this->hero_nickname, $this->hero_enickname,
+			$this->hero_cname, $this->hero_ename, $this->hero_icon, $this->hero_prop_icon, $this->hero_hp, $this->hero_mp, $this->hero_str, 
+			$this->hero_lvlup_str, $this->hero_agi, $this->hero_lvlup_agi, $this->hero_int, $this->hero_lvlup_int, $this->hero_attack_min, 
+			$this->hero_attack_max, $this->hero_armor, $this->hero_attack_range, $this->hero_sight_day, $this->hero_sight_night, $this->hero_move_speed,
+			$this->hero_missile_speed, $this->hero_attack_anim1, $this->hero_attack_anim2, $this->hero_cast_anim1, $this->hero_cast_anim2, 
+			$this->hero_attack_time, $this->hero_motto, $this->hero_story, $this->hero_id);
+		
+		$db = new DB();
+		return $db->execute($sql, $bind_param); 
+	}
+
 	public function load($hero_id)
 	{
 		$sql = 'select hero_name, hero_nickname, hero_enickname, hero_cname, hero_ename, hero_icon, hero_prop_icon, hero_hp, hero_mp, hero_str,
@@ -213,9 +231,22 @@ class Hero_skill
 
 	}
 
+	public function update()
+	{
+		$sql = 'update hero_skill set hero_id=?, skill_name=?, skill_icon=?, skill_seq=?, skill_type=?, skill_mp=?, skill_cd=?, skill_scope=?, 
+				skill_target=?, skill_dmg_type=?, skill_desc=?, skill_effect=?, skill_hint=? where skill_id=?';
+
+		$bind_param = array('issiissssssssd', $this->hero_id, $this->skill_name, $this->skill_icon, $this->skill_seq, $this->skill_type, 
+			$this->skill_mp, $this->skill_cd, $this->skill_scope, $this->skill_target, $this->skill_dmg_type, $this->skill_desc, $this->skill_effect, 
+			$this->skill_hint, $this->skill_id);
+
+		$db = new DB();
+		return $db->execute($sql, $bind_param); 
+	}
+
 	public function load($skill_id)
 	{
-		$sql = 'select hero_id, skill_name, skill_icon, skill_type, skill_mp, skill_cd, skill_scope, skill_target, skill_dmg_type,
+		$sql = 'select hero_id, skill_name, skill_icon, skill_type, skill_seq, skill_mp, skill_cd, skill_scope, skill_target, skill_dmg_type,
 					skill_desc, skill_effect, skill_hint from hero_skill where skill_id = ?';
 		$bind_param = array('i', $skill_id);
 
@@ -224,10 +255,12 @@ class Hero_skill
 		{
 			if(($row = $db->fetch($result)) == false) return false; 
 
+			$this->skill_id = $skill_id;
 			$this->hero_id = $row['hero_id'];
 			$this->skill_name = $row['skill_name'];
 			$this->skill_icon = $row['skill_icon'];
 			$this->skill_type = $row['skill_type'];
+			$this->skill_seq = $row['skill_seq'];
 			$this->skill_mp = $row['skill_mp'];
 			$this->skill_cd = $row['skill_cd'];
 			$this->skill_scope = $row['skill_scope'];

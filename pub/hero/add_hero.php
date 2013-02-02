@@ -5,7 +5,7 @@ if(isset($_POST['hero_submit']))
 {
 	include ('../../lib/view/header.php');
 	include ('../../lib/controller/hero.php');
-	if(add_hero() != false)
+	if(add_hero(false) != false)
 	{
 		echo "添加英雄成功";
 	}

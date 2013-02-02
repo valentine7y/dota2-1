@@ -19,7 +19,7 @@ if(isset($_POST['skill_submit']))
 else 
 {
 	include ('../../lib/view/header.php');
-	include ('../../lib/view/add_skill.php');
+	include ('../../lib/view/hero_skill.php');
 	include ('../../lib/view/footer.php');
 }
 

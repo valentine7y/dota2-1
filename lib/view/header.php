@@ -24,11 +24,12 @@ require_once('../../lib/common/util.php');
 
 	  <div class="top-nav-items">
 	    <ul>
-		  <li> <a href="<?php echo DOMAIN_MAIN;?>match"> 赛事</a> </li>
-		  <li> <a href="<?php echo DOMAIN_MAIN;?>live"> 直播 </a> </li>
-		  <li> <a href="<?php echo DOMAIN_MAIN;?>video"> 视频</a> </li>
-		  <li> <a href="<?php echo DOMAIN_MAIN;?>hero"> 英雄 </a> </li>
-		  <li> <a href="<?php echo DOMAIN_MAIN;?>player">玩家</a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>hero/"> 英雄 </a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>item/"> 物品</a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>video/"> 视频</a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>match/"> 赛事</a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>live/"> 直播 </a> </li>
+		  <li> <a href="<?php echo DOMAIN_MAIN;?>player/">玩家</a> </li>
 		</ul>
 	  </div>
 	  

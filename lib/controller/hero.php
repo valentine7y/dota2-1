@@ -2,7 +2,7 @@
 require_once('../../lib/model/hero.php');
 require_once('../../lib/common/util.php');
 
-function add_hero()
+function add_hero($update)
 {
 	$hero = new Hero();
 	$hero->hero_id = intval($_POST['hero_id']);
@@ -39,11 +39,16 @@ function add_hero()
 	$hero->hero_motto = $_POST['hero_motto'];
 	$hero->hero_story = $_POST['hero_story'];
 
-	
-	if($hero->add() == false) return false;
+	if($update == true)
+	{
+		if($hero->update() == false) return false;
+	}
+	else
+	{
+		if($hero->add() == false) return false;
+	}
 	return true;
 }
-
 
 function add_hero_skill()
 {
@@ -53,18 +58,40 @@ function add_hero_skill()
 	$skill->skill_icon = $_POST['skill_icon'];
 	$skill->skill_seq = intval($_POST['skill_seq']);
 	$skill->skill_type = intval($_POST['skill_type']);
-	$skill->skill_mp = $_POST['skill_type'];
+	$skill->skill_mp = $_POST['skill_mp'];
 	$skill->skill_cd = $_POST['skill_cd'];
 	$skill->skill_scope  = $_POST['skill_scope'];
 	$skill->skill_target = $_POST['skill_target'];
 	$skill->skill_dmg_type = $_POST['skill_dmg_type'];
 	$skill->skill_desc = $_POST['skill_desc'];
 	$skill->skill_effect = $_POST['skill_effect'];
-	$skill->skill_hint = $_POST['skill_effect'];
+	$skill->skill_hint = $_POST['skill_hint'];
 	
 	if($skill->add() == false) return false;
 	return true;
 
+}
+
+function update_hero_skill()
+{
+	$skill = new Hero_skill();
+	$skill->skill_id = intval($_POST['skill_id']);
+	$skill->hero_id = intval($_POST['hero_id']);
+	$skill->skill_name = $_POST['skill_name'];
+	$skill->skill_icon = $_POST['skill_icon'];
+	$skill->skill_seq = intval($_POST['skill_seq']);
+	$skill->skill_type = intval($_POST['skill_type']);
+	$skill->skill_mp = $_POST['skill_mp'];
+	$skill->skill_cd = $_POST['skill_cd'];
+	$skill->skill_scope  = $_POST['skill_scope'];
+	$skill->skill_target = $_POST['skill_target'];
+	$skill->skill_dmg_type = $_POST['skill_dmg_type'];
+	$skill->skill_desc = $_POST['skill_desc'];
+	$skill->skill_effect = $_POST['skill_effect'];
+	$skill->skill_hint = $_POST['skill_hint'];
+	
+	if($skill->update() == false) return false;
+	return $skill;
 }
 
 
@@ -90,5 +117,14 @@ function get_hero_by_name($hero_name)
 	return false;
 }
 
+function get_skill($skill_id)
+{
+	$skill = new Hero_skill();
+	if($skill->load($skill_id) != false)
+	{
+		return $skill; 
+	}
+	return false;
+}
 
 ?>
