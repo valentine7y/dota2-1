@@ -1,10 +1,10 @@
 <?php
-require_once ('common/db.php');
+require_once('../../lib/common/db.php');
 
 class User
 {
-	public $uid;
-	public $emailAddr;
+	public $user_id;
+	public $email;
 	public $password;
 	public $username;
 	public $active;
@@ -16,8 +16,8 @@ class User
 
 	public function __construct()
 	{
-		$this->uid = 0;
-		$this->emailAddr = '';
+		$this->user_id = 0;
+		$this->email = '';
 		$this->password = '';
 		$this->username = '';
 		$this->active = 0;
@@ -37,73 +37,109 @@ class User
 		$this->field = $value;
 	}
 
-	public static function validateEmailAddr($email)
-	{
-		return filter_var($email, FILTER_VALIDATE_EMAIL);
-	}
 
-	public static function getById($user_id, $db_link)
+	//创建角色第一步
+	public function create()
 	{
-		$user = new User();
-		$query = sprintf('select email, password, username, active from user where id = %d', $user_id);
-		$result = mysql_query($query, $db_link);
+		$sql = 'insert into user (username, password, email) values(?, ?, ?)';
+		$bind_param = array('sss', $this->username, $this->password, $this->email);
+
+		$db = new DB();
+		if($db->execute($sql, $bind_param) == false) return false;
 		
-		if(mysql_num_rows($result) == 1)
+		$this->user_id = $db->last_insert_id();
+
+		$token = md5(uniqid(rand(), true));
+		$sql = 'insert into user_token(user_id, token) values(?, ?)';
+		$bind_param = array('ds', $this->user_id, $token);
+
+		if($db->execute($sql, $bind_param) != false) 
 		{
-			$row = mysql_fetch_assoc($result);
-			$user->username = $row['username'];
-			$user->password = $row['password'];
-			$user->emailAddr = $row['email'];
-			$user->active = $row['active'];
-			$user->uid = $user_id;
+			send_activate_mail($this->user_id, $this->username, $this->email, $token);
 
 		}
-		mysql_free_result($result);
-		return $user;
+		return true;
+	}
+	
+	//创建角色第二步
+	public function create_step2( $gender, $city_id, $user_id)
+	{
+		$sql = 'update user set gender = ?, city = ? where user_id = ?';
+		$bind_param = array('ddd',  $gender, $city_id, $user_id);
+		$db = new DB();
+		return $db->execute($sql, $bind_param); 
+	}
+	
+	//创建角色第三步
+	public function create_step3($user_id, $url)
+	{
+		$sql = sprintf('update user set avastar = ? where user_id = ?', mysql_real_escape_string($url), $user_id);
+		$bind_param = array('sd',  $url, $user_id);
+
+		$db = new DB();
+		return $db->execute($sql, $bind_param); 
 	}
 
-	public static function getByUserMail($usermail, $db_link)
-	{
-		$user = new User();
-		$query = sprintf('select user_id, password, username, active from user where email = "%s"', 
-				mysql_real_escape_string($usermail));
 
-		$result = mysql_query($query, $db_link);
-		
-		if(mysql_num_rows($result) == 1)
+	public static function isEmailExist($email)
+	{
+		$sql = 'select user_id, password, username, active from user where email = ?'; 
+		$bind_param = array('s', $email);
+
+		$db = new DB();
+		if(($result = $db->execute($sql, $bind_param)) != false)
 		{
-			$row = mysql_fetch_assoc($result);
-			$user->username = $row['username'];
-			$user->password = $row['password'];
-			$user->active = $row['active'];
-			$user->emailAddr = $usermail;
-			$user->uid = $row['user_id'];
-
+			if(($row = $db->fetch($result)) != false) 
+			{
+				return true;
+			}
 		}
-		mysql_free_result($result);
-		return $user;
-
+		return false;
 	}
 
-	public static function send_activate_mail($uid, $username, $email, $token)
+	public function load($user_id)
 	{
-		$body = "$username, 你好!\n";
-		$body .= "感谢你在17lol上注册新账户, 你使用的邮箱地址是: $email\n";
-		$body .= "请点击下面的链接完成验证:\n";
-		$body .= BASE_URL . 'user/activate.php?x=' . $uid . "&y=$token\n";
-		$body .= "如果邮箱里不能打开链接，也可以将它复制到浏览器地址栏里打开。\n";
+		$sql = 'select email, password, username, active, gender, city, avastar, create_date from user where user_id = ?';
+		$bind_param = array('d',  $user_id); 
 
-		$headers = "MIME-Version: 1.0\r\n";
-		$headers .= "Content-type: text/plain; charset=utf-8\r\n";
-		$headers .= "Content-Transfer-Encoding: 8bit\r\n";
-		$headers .= "From: niba@niba.com";
+		$db = new DB();
+		if(($result = $db->execute($sql, $bind_param)) != false)
+		{
+			if(($row = $db->fetch($result)) == false) return false; 
 
-		$subject = $username . ',请验证你在17lol上注册的Email';
-		$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
-
-	  @mail($email, $subject, $body, $headers);
-
+			$this->username = $row['username'];
+			$this->password = $row['password'];
+			$this->email = $row['email'];
+			$this->active = $row['active'];
+			$this->gender = $row['gender'];
+		//	$this->nickname = $row['nickname'];
+			$this->city = $row['city'];
+			$this->avastar = $row['avastar'];
+			$this->create_date = $row['create_date'];
+			$this->user_id= $user_id;
+		}
+		return true;
 	}
+
+	public function load_by_email($email) 
+	{
+		$sql = 'select user_id, password, username, active from user where email = ?'; 
+		$bind_param = array('s',  $email); 
+
+		$db = new DB();
+		if(($result = $db->execute($sql, $bind_param)) != false)
+		{
+			if(($row = $db->fetch($result)) == false) return false; 
+
+			$this->username = $row['username'];
+			$this->password = $row['password'];
+			$this->active = $row['active'];
+			$this->email = $email;
+			$this->user_id = $row['user_id'];
+		}
+		return true;
+	}
+
 
 	public static function send_resetpw_mail($email, $code)
 	{
@@ -123,64 +159,10 @@ class User
 	  @mail($email, $subject, $body, $headers);
 	}
 
-	public function create($db_link)
+
+	public static function setActive($user_id, $token, $db_link)
 	{
-		$query = sprintf('insert into user (username, password, email) values("%s", "%s", "%s")',
-				mysql_real_escape_string($this->username), 
-				mysql_real_escape_string($this->password),
-				mysql_real_escape_string($this->emailAddr));
-
-		$result = mysql_query($query, $db_link);
-		if(mysql_affected_rows($db_link) == 1)
-		{
-			$this->uid = mysql_insert_id($db_link);
-
-			$token = md5(uniqid(rand(), true));
-			$query = sprintf('insert into user_token(user_id, token) values("%d", "%s")',
-					$this->uid, $token);
-
-			mysql_query($query, $db_link);
-			if(mysql_affected_rows($db_link) == 1)
-			{
-				User::send_activate_mail($this->uid, $this->username, $this->emailAddr, $token);
-			}
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	public function load($db_link, $uid)
-	{
-		$query = sprintf('select email, password, username, active, gender, city, avastar, create_date from user where user_id = %d', $uid);
-		$result = mysql_query($query, $db_link);
-		
-		if(mysql_num_rows($result) == 1)
-		{
-			$row = mysql_fetch_assoc($result);
-			$this->username = $row['username'];
-			$this->password = $row['password'];
-			$this->emailAddr = $row['email'];
-			$this->active = $row['active'];
-			$this->gender = $row['gender'];
-		//	$this->nickname = $row['nickname'];
-			$this->city = $row['city'];
-			$this->avastar = $row['avastar'];
-			$this->create_date = $row['create_date'];
-			$this->uid = $uid;
-
-			mysql_free_result($result);
-			return true;
-
-		}
-		return false;
-	}
-
-	public static function setActive($uid, $token, $db_link)
-	{
-		$query = sprintf('select active from user where user_id = %d', $uid);
+		$query = sprintf('select active from user where user_id = %d', $user_id);
 
 		$result = mysql_query($query, $db_link);
 		if(mysql_num_rows($result) != 1)
@@ -200,8 +182,7 @@ class User
 
 		}
 
-		$query = sprintf('select token from user_token where user_id = %d and token = "%s" ', $uid, 
-					mysql_real_escape_string($token));
+		$query = sprintf('select token from user_token where user_id = %d and token = "%s" ', $user_id, mysql_real_escape_string($token));
 
 		$result = mysql_query($query, $db_link);
 		if(mysql_num_rows($result) != 1)
@@ -213,7 +194,7 @@ class User
 		{
 			mysql_free_result($result);
 
-			$query = sprintf('update user set active = 1 where user_id = %d', $uid);
+			$query = sprintf('update user set active = 1 where user_id = %d', $user_id);
 			$result = mysql_query($query, $db_link);
 			if(mysql_affected_rows($db_link) != 1)
 			{
@@ -221,7 +202,7 @@ class User
 			}
 			else 
 			{
-				$query = sprintf('delete from user_token where user_id = %d and token = "%s" ', $uid,
+				$query = sprintf('delete from user_token where user_id = %d and token = "%s" ', $user_id,
 						mysql_real_escape_string($token));
 
 				$result = mysql_query($query, $db_link);
@@ -231,9 +212,9 @@ class User
 		}
 	}
 
-	public static function changePW($db_link, $uid, $old_passwd, $new_passwd)
+	public static function changePW($db_link, $user_id, $old_passwd, $new_passwd)
 	{
-		$query = sprintf('select password from user where user_id = %d', $uid);
+		$query = sprintf('select password from user where user_id = %d', $user_id);
 		$result = mysql_query($query, $db_link);
 		
 		if(mysql_num_rows($result) != 1) return 1; //用户不存在
@@ -246,7 +227,7 @@ class User
 
 		$new_passwd = sha1($new_passwd);
 		$query = sprintf('update user set password = "%s" where user_id = %d',
-				mysql_real_escape_string($new_passwd), $uid);
+				mysql_real_escape_string($new_passwd), $user_id);
 
 		$result = mysql_query($query, $db_link);
 
@@ -256,9 +237,9 @@ class User
 	}
 
 	//TBD: 需要做时间检查, 超过多长时间code失效
-	public static function createResetCode($email, $uid, $db_link)
+	public static function createResetCode($email, $user_id, $db_link)
 	{
-		$query = sprintf('select code from user_resetpw where user_id = %d', $uid);
+		$query = sprintf('select code from user_resetpw where user_id = %d', $user_id);
 		$result = mysql_query($query, $db_link);
 		
 		$code = md5(uniqid(rand(), true));
@@ -268,7 +249,7 @@ class User
 		{
 			mysql_free_result($result);
 
-			$query = sprintf('update user_resetpw set code = "%s" where user_id = %d', $code, $uid);
+			$query = sprintf('update user_resetpw set code = "%s" where user_id = %d', $code, $user_id);
 			$result = mysql_query($query, $db_link);
 
 			if(mysql_affected_rows($db_link) != 1) return 1; 
@@ -281,7 +262,7 @@ class User
 			mysql_free_result($result);
 
 			$query = sprintf('insert into user_resetpw (user_id, email, code) values (%d, "%s", "%s")',
-					$uid, mysql_real_escape_string($email), $code); 
+					$user_id, mysql_real_escape_string($email), $code); 
 
 			$result = mysql_query($query, $db_link);
 			if(mysql_affected_rows($db_link) != 1) return 1; 
@@ -292,11 +273,11 @@ class User
 		}
 	}
 
-	public static function resetPW($uid, $new_passwd, $db_link)
+	public static function resetPW($user_id, $new_passwd, $db_link)
 	{
 		$new_passwd = sha1($new_passwd);
 		$query = sprintf('update user set password = "%s" where user_id = %d',
-				mysql_real_escape_string($new_passwd), $uid);
+				mysql_real_escape_string($new_passwd), $user_id);
 
 		$result = mysql_query($query, $db_link);
 
@@ -305,210 +286,7 @@ class User
 		return 0; //成功
 	}
 
-	public static function CreateAccountStep1()
-	{
-		echo "1";
-		if(empty($_POST['email']) || empty($_POST['passwd1']) || empty($_POST['passwd2']) || empty($_POST['username'])
-				|| empty($_POST['captcha']))
-		{
-			return 1;
-		}
 
-		echo "2";
-		if(!User::validateEmailAddr($_POST['email'])) return 2;
-
-		$passwd1_len = strlen($_POST['passwd1']);
-		$passwd2_len = strlen($_POST['passwd2']);
-		if($passwd1_len < 6 || $passwd2_len < 6) return 3;
-
-		if($_POST['passwd1'] != $_POST['passwd2']) return 4;
-
-		//tbd: 中文utf8占用3个字节, 怎么检查不超过8个中文或者16个英文
-		if(strlen($_POST['username']) > 24) 
-		{
-			return 5;
-		}
-
-		/*tbd 暂时先屏蔽这个, 因为目前的php不支持gd库
-		//检查检验码
-		if(!isset($_POST['captcha']) || $_POST['captcha'] != $_SESSION['captcha']) return 6;
-		*/
-
-
-		echo "3";
-		$db = new DB();
-		$db_link = $db->connect();
-		if($db_link == false) return 7;
-
-		//检查账号是否已经注册了
-		$user = User::getByUserMail($_POST['email'], $db_link);
-		if($user->uid)
-		{
-			return 8;
-		}
-		//未注册可以写数据库
-		else
-		{
-			$user = new User();
-			$user->emailAddr = $_POST['email'];
-			$passwd = $_POST['passwd1'];
-			$user->password = sha1($passwd);
-			$user->username = $_POST['username'];
-
-			if(!$user->create($db_link))
-			{
-				return 9;
-			}
-
-			$_SESSION['access'] = TRUE;
-			$_SESSION['user_id'] = $user->uid; 
-			$_SESSION['username'] = $user->username;
-
-		}
-		return 0;
-	}
-
-	public static function CreateAccountStep2(&$err_msg)
-	{
-		$err = false;
-		$gender = 0;
-		if(!empty($_POST['gender']) && is_numeric($_POST['gender']))
-		{
-			$gender = (int) ($_POST['gender']);
-		}
-
-		$city_id = 0;
-		if(!empty($_POST['province_city']) && is_numeric($_POST['province_city']))
-		{
-			$city_id = (int) ($_POST['province_city']);
-		}
-
-		if($gender != 0 || $city_id != 0)
-		{
-			$db = new DB();
-			$db_link = $db->connect();
-			if($db_link == false)
-			{
-				$err = true;
-				$err_msg = '当前站点发生未知错误';
-			}
-			else
-			{
-				$user_id = $_SESSION['user_id'];
-				$query = sprintf('update user set gender = %d, city = %d where user_id = %d', $gender, $city_id, $user_id);
-				$result = mysql_query($query, $db_link);
-				if(mysql_affected_rows($db_link) != 1)
-				{
-					$err = true;
-					$err_msg = '当前站点发生未知错误';
-				}
-			}
-		}
-		return $err;
-	}
-	
-	public static function CreateAccountStep3(&$err_msg)
-	{
-		if(!isset($_FILES['avastar']['name']) || empty($_FILES['avastar']['name']))
-		{
-			$err_msg =  '上传图片失败，请重新尝试';
-			$err = true;
-		}
-		else
-		{
-			$filename = $_FILES['avastar']['tmp_name'];
-
-			// Get new dimensions
-			list($width, $height) = getimagesize($filename);
-			$image = imagecreatefromjpeg($filename);
-
-			// Resample
-			$image_p1 = imagecreatetruecolor(160, 160);
-			$image_p2 = imagecreatetruecolor(48, 48);
-
-			imagecopyresampled($image_p1, $image, 0, 0, 0, 0, 160, 160, $width, $height);
-			imagecopyresampled($image_p2, $image, 0, 0, 0, 0, 48, 48, $width, $height);
-
-			//output
-			$outputname1 = '../../img/avastar/' . $_SESSION['user_id'] . 'l.jpg';
-			$outputname2 = '../../img/avastar/' . $_SESSION['user_id'] . 'm.jpg';
-
-			imagejpeg($image_p1, $outputname1, 100);
-			imagejpeg($image_p2, $outputname2, 100);
-
-			$url = "avastar/" . $_SESSION['user_id']; 
-
-			$db = new DB();
-			$db_link = $db->connect();
-			if($db_link == false)
-			{
-				$err = true;
-				$err_msg = '当前站点发生未知错误';
-				@unlink($outputname);
-			}
-			else
-			{
-				$user_id = $_SESSION['user_id'];
-				$query = sprintf('update user set avastar = "%s" where user_id = %d', mysql_real_escape_string($url), $user_id);
-				$result = mysql_query($query, $db_link);
-
-				if(mysql_affected_rows($db_link) != 1)
-				{
-					$err = true;
-					$err_msg = '当前站点发生未知错误';
-				}
-
-				$url = '/user/' .  $_SESSION[user_id];
-				header("Location: $url");
-				exit();
-			}
-		}
-	}
-
-	public static function Login($email, $password, $remember_login, &$msg, &$error)
-	{
-		$db = new DB();
-		$db_link = $db->connect();
-
-		if($db_link == false)
-		{
-			$msg =  '数据库错误, 请稍后再试';
-			$error = true;
-		}
-		else
-		{
-			$user = User::getByUserMail($email, $db_link);
-
-			if($user->uid == 0)
-			{
-				$msg = '该用户不存在';
-				$error = true;
-			}
-			else if($user->password == sha1($password))
-			{
-				$_SESSION['access'] = TRUE;
-				$_SESSION['user_id'] = $user->uid;
-				$_SESSION['username'] = $user->username;
-
-				if($remember_login == 1)
-				{
-					if(!isset($_COOKIE['user_email']) || !isset($_COOKIE['user_passwd']))
-					{
-						setcookie('user_email', $_POST['email']);  
-						setcookie('user_passwd', $_POST['password']);  
-					}
-				}
-				$msg = '登陆成功';
-				$error = false;
-			}
-			else
-			{
-				$msg = '输入的密码不正确'; 
-				$error = true;
-			}
-		}
-
-	}
 	
 	public static function TryChangePW(&$err_msg, &$error)
 	{
@@ -574,7 +352,7 @@ class User
 			$err = true;
 			$err_msg = '邮箱不能为空';
 		}
-		else if(!User::validateEmailAddr($_POST['email']))
+		else if(!User::validateemail($_POST['email']))
 		{
 			$err = true;
 			$err_msg = '邮箱格式不正确';
@@ -602,9 +380,9 @@ class User
 				else
 				{
 					$row = mysql_fetch_assoc($result);
-					$uid = $row['user_id'];
+					$user_id = $row['user_id'];
 
-					if(User::createResetCode($_POST['email'], $uid, $db_link) != 0)
+					if(User::createResetCode($_POST['email'], $user_id, $db_link) != 0)
 					{
 						$err = true;
 						$err_msg = '重置密码失败，请重新尝试';
@@ -643,8 +421,8 @@ class User
 		else
 		{
 			$row = mysql_fetch_assoc($result);
-			$uid = $row['user_id'];
-			$_SESSION['user_id'] = $uid;
+			$user_id = $row['user_id'];
+			$_SESSION['user_id'] = $user_id;
 
 			$err = false;
 		}

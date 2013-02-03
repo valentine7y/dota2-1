@@ -19,7 +19,7 @@ if(isset($_POST['hero_submit']))
 else
 {
 	include ('../../lib/view/header.php');
-	include ('../../lib/view/add_hero.php');
+	include ('../../lib/view/hero.php');
 	include ('../../lib/view/footer.php');
 }
 ?>

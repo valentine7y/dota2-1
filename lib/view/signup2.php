@@ -8,26 +8,28 @@
 <script src="<?php echo DOMAIN_JS;?>/util.js"> </script>
 <script src="<?php echo DOMAIN_JS;?>/reg.js"> </script>
 
-<h2> 恭喜你！账号注册成功，请尽快到你的邮箱激活你的账号 </h2>
 
 <div id="content">
-	<div class="grid clearfix">
-		<div class="article" style="margin-top:20px">
-		<h1> 补充信息 - <span style="font-size:70%">第一步</span></h2>
+	<div class="main">
+		<div class="form-title">
+			<h2> 恭喜你！账号注册成功，请尽快到你的邮箱激活你的账号 </h2>
+			<h2> 补充信息 - 第一步</h2>
+		</div>
 
-		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
-			<div class="item">
-				<label for="gender">性别</label>
+		<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" class="basic-form">
+
+			<div class="field">
+				<label for="gender" class="field-label">性别</label>
 				<span>男<input id="gender_male" type="radio" name="gender" value="1" /></span>
 				<span>女<input id="gender_female" type="radio" name="gender" value="2" /></span>
-				<span class="item_desc" id="email_desc"></span>
+				<span class="field-desc" id="email_desc"></span>
 			</div>
 			
-			<div class="item">
-				<label for="address">住址</label>
+			<div class="field">
+				<label for="address" class="field-label">住址</label>
 				<select id="province" name="province"> 
 					<?php 
-					  require('../../lib/location.php');
+					  require_once('../../lib/common/location.php');
 					  createProvince(); 
 					?>
 				</select>
@@ -37,17 +39,21 @@
 				</select>
 			</div>
 			
-			<div class="item" style="margin-top:50px" >
-				<input type="submit" value="下一步" name="signup2_submit" id="signup2_submit" />
-				<input type="submit" value="跳过" name="signup2_skip" id="signup2_skip" />
+			<div class="form-submit"> 
+				<input type="submit" value="下一步" name="signup2_submit" id="signup2_submit" class="form-submit-btn"/>
+				<input type="submit" value="跳过" name="signup2_skip" id="signup2_skip" class="form-submit-btn" />
 			</div>
 
 		</form>
-		</div> <!-- article -->
 
-		<div class="aside">
-		</div> <!-- aside -->
+	</div>
 
-	</div> <!-- grid -->
+	<div class="aside">
+		<div class="item">
+			<p> 已经有账号? <a rel="nofollow" href="login.php">直接登录</a></p>
+		</div>
+	</div> <!-- aside -->
+
+	<div class="extra clearfix"> </div>
 </div> <!-- content -->
 

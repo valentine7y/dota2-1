@@ -1,5 +1,6 @@
 html 
 {
+	background: none repeat scroll 0 0 #E0E0E0;
 }
 
 body, p, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote 
@@ -11,8 +12,8 @@ body, p, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, field
 
 body 
 {
-	width:960px;
 	margin: auto;
+	width: 1000px;
 	padding: 0;
 	border: 0;
 	font-family: Arial, Helvetica, sans-serif;
@@ -149,9 +150,7 @@ li
 
 #wrapper
 {
-	clear: both;
-	overflow: none;
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 
@@ -168,9 +167,19 @@ li
 {
 	float: left;
 	width: 680px; 
-	margin: 0 10px 50px 0;
-	background-color: #F8F8F8;
-	border-radius: 8px 8px 0 0;
+	margin: 0 10px 0px 0px;
+/*	background-color: #F8F8F8; */
+	background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.form-title
+{
+	padding: 20px 0 20px 30px;
+}
+
+.basic-form
+{
+	padding: 20px 0 150px 20px;
 }
 
 .basic-form fieldset
@@ -195,7 +204,7 @@ li
 }
 
 .basic-form .basic-input, .basic-form .basic-textarea, .basic-form .wide-input {
-    border: 1px solid #C9C9C9;
+    border: 1px solid #cccccc;
     border-radius: 3px 3px 3px 3px;
     display: inline-block;
     font-size: 12px;
@@ -231,10 +240,17 @@ li
 	text-align: center;
 }
 
+.form-error
+{
+	padding-top: 30px;
+	color: #FF0000;
+	font-size: 14px;
+}
+
 .hero-info
 {
-	padding-bottom: 20px;
-	border-bottom: 1px solid #FFEEEE;
+	padding: 20px 0 20px 10px;
+	border-bottom: 1px solid #D1CDCD;
 	margin: 0 0 10px 0;
 }
 
@@ -327,11 +343,29 @@ li
 
 .hero-prop
 {
-	padding-bottom: 20px;
-	border-bottom: 1px solid #FFEEEE;
+	padding: 0 0 20px 15px;
+	border-bottom: 1px solid #D1CDCD;
 	margin: 0 0 10px 0;
 }
 
+.hero-prop-left
+{
+	float: left;
+	width: 250px;
+}
+
+.hero-prop-right
+{
+	float: left;
+}
+
+
+.hero-skill
+{
+	padding: 0 0 20px 15px;
+	border-bottom: 1px solid #D1CDCD;
+	margin: 0 0 10px 0;
+}
 
 .hero-skill li
 {
@@ -380,27 +414,84 @@ li
 	color: #EB9248;
 }
 
-
-#wrapper #content .aside
+.hero-comment
 {
-	float: left;
-	width: 240px; 
-	margin-left: 10px;
-	padding-left: 20px;
-	padding-top: 50px;
-	background-color: #F8F8F8;
+	padding: 0 0 20px 15px;
+	border-bottom: 1px solid #D1CDCD;
+	margin: 0 0 10px 0;
 }
 
+.show-comment
+{
+	margin-bottom: 30px;
+}
+
+.add-comment textarea
+{
+	width: 600px;
+	height: 100px;
+}
+
+.comment-btn
+{
+	margin-top: 10px;
+	width: 80px;
+	height: 40px;
+	background-color: #FFCC99;
+}
+
+.field-desc
+{
+	font-size: 12px;
+	color: #0099FF;
+}
+
+.field-desc-error
+{
+	font-size: 12px;
+	color: #FF0000;
+}
+
+#captcha
+{
+	float: left;
+}
+
+#captcha_img
+{
+	float: left;
+}
+
+.pl120
+{
+	padding-left: 120px;
+}
+
+.aside
+{
+	float: right;
+	width: 300px; 
+	margin-left: 10px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	min-height: 240px;
+}
+
+.aside .item
+{
+	padding: 20px 0 0 20px;
+}
+ 
 
 #wrapper #content .extra
 {
 }
 
+
 #footer
 {
+	margin-top: 100px;
 	clear: both;
 	text-align: center;
-
 }
 	
 

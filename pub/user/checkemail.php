@@ -1,5 +1,5 @@
 <?php
-include '../../lib/user.php';
+include '../../lib/model/user.php';
 
 if($_REQUEST['email'] == '')
 {
@@ -7,16 +7,7 @@ if($_REQUEST['email'] == '')
 	exit();
 }
 
-$db = new DB();
-$db_link = $db->connect();
-if($db_link == false)
-{
-	echo "other";
-	exit();
-}
-
-$user = User::getByUserMail($_REQUEST['email'], $db_link);
-if($user->uid)
+if(User::isEmailExist($_REQUEST['email']))
 {
 	echo "deny"; 
 	exit();

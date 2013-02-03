@@ -1,5 +1,5 @@
 <?php
-include ('../../lib/location.php');
+include ('../../lib/common/location.php');
 
 if(!isset($_GET['province']))
 {

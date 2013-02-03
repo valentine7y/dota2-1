@@ -111,55 +111,87 @@ function show_hero_skill()
 		</div> <!-- basic info -->
 
 		
-		<div class="hero-prop">
-			<p>
-				初始生命: <?php echo $hero->hero_hp ?>	
-			</p>
-			<p>
-				初始魔法: <?php echo $hero->hero_mp ?>	
-			</p>
-			<p>
-				力量: <?php echo $hero->hero_str?>(每等级+<?php echo round($hero->hero_lvlup_str, 1) ?>) 
-			</p>
-			<p>
-				敏捷: <?php echo $hero->hero_agi?>(每等级+<?php echo round($hero->hero_lvlup_agi, 1)?>)
-			</p>
-			<p>
-				智慧: <?php echo $hero->hero_int?>(每等级+<?php echo round($hero->hero_lvlup_int, 1)?>)
-			</p>
-			<p>
-				初始攻击: <?php echo $hero->hero_attack_min ?>-<?php echo $hero->hero_attack_max?>
-			</p>
-			<p>
-				初始护甲: <?php echo round($hero->hero_armor,2)?>
-			</p>
-			<p>
-				攻击范围: <?php echo $hero->hero_attack_range?>
-			</p>
-			<p>
-				视野(白天/黑夜): <?php echo $hero->hero_sight_day . '/' . $hero->hero_sight_night?>
-			</p>
-			<p>
-				移动速度: <?php echo $hero->hero_move_speed?>
-			</p>
-			<p>
-				弹道速度: <?php echo $hero->hero_missile_speed?>
-			</p>
-			<p>
-				攻击间隔: <?php echo round($hero->hero_attack_time,2)?>
-			</p>
-			<p>
-				攻击(前摇/后摇): <?php echo round($hero->hero_attack_anim1,2) . '/' . round($hero->hero_attack_anim2,2)?>
-			</p>
-			<p>
-				施法(前摇/后摇): <?php echo round($hero->hero_cast_anim1,2) . '/' . round($hero->hero_cast_anim2,2)?>
-			</p>
+		<div class="hero-prop clearfix">
+			<h2>英雄属性</h2>
+			<div class="hero-prop-left">
+				<p>
+					初始生命: <?php echo $hero->hero_hp ?>	
+				</p>
+				<p>
+					初始魔法: <?php echo $hero->hero_mp ?>	
+				</p>
+				<p>
+					力量: <?php echo $hero->hero_str?>(每等级+<?php echo round($hero->hero_lvlup_str, 1) ?>) 
+				</p>
+				<p>
+					敏捷: <?php echo $hero->hero_agi?>(每等级+<?php echo round($hero->hero_lvlup_agi, 1)?>)
+				</p>
+				<p>
+					智慧: <?php echo $hero->hero_int?>(每等级+<?php echo round($hero->hero_lvlup_int, 1)?>)
+				</p>
+				<p>
+					初始攻击: <?php echo $hero->hero_attack_min ?>-<?php echo $hero->hero_attack_max?>
+				</p>
+				<p>
+					初始护甲: <?php echo round($hero->hero_armor,2)?>
+				</p>
+			</div>
+			
+			<div class="hero-prop-right">
+				<p>
+					攻击范围: <?php echo $hero->hero_attack_range?>
+				</p>
+				<p>
+					视野(白天/黑夜): <?php echo $hero->hero_sight_day . '/' . $hero->hero_sight_night?>
+				</p>
+				<p>
+					移动速度: <?php echo $hero->hero_move_speed?>
+				</p>
+				<p>
+					弹道速度: <?php echo $hero->hero_missile_speed?>
+				</p>
+				<p>
+					攻击间隔: <?php echo round($hero->hero_attack_time,2)?>
+				</p>
+				<p>
+					攻击(前摇/后摇): <?php echo round($hero->hero_attack_anim1,2) . '/' . round($hero->hero_attack_anim2,2)?>
+				</p>
+				<p>
+					施法(前摇/后摇): <?php echo round($hero->hero_cast_anim1,2) . '/' . round($hero->hero_cast_anim2,2)?>
+				</p>
+			</div>
 		</div> <!-- hero prop -->	
 
 		<div class="hero-skill">
+			<h2>英雄技能</h2>
 			<ul>
 			<?php show_hero_skill() ?>
 			</ul>
+		</div>
+
+
+		<div class="hero-comment">
+			<h2>英雄留言板</h2>
+
+			<div class="show-comment">
+			<?php 
+				if(empty($hero->hero_comment))
+				{
+					echo '<p> 暂时没有评论，赶紧添加吧 </p>';
+				}
+				else
+				{
+					show_hero_comment();
+				}
+			?>
+			</div>
+
+			<div class="add-comment">
+				<textarea id="comment" name="comment"></textarea>
+				<div>
+					<input id="add_commnet_btn" name="add_comment_btn" class="comment-btn" type="button" value="发表评论" />
+				</div>
+			</div>
 		</div>
 
 	</div> <!-- main -->
@@ -168,7 +200,7 @@ function show_hero_skill()
 	<div class="aside">
 	</div> <!-- aside -->
 
-	<div class="extra"> </div>
+	<div class="extra clearfix"> </div>
 
 </div> <!-- content -->
 

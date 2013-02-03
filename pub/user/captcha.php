@@ -25,7 +25,7 @@ session_start();
 
 class CaptchaSecurityImages {
 
-	var $font = 'monofont.ttf';
+	var $font = '../../lib/resource/monofont.ttf';
 
 	function generateCode($characters) {
 		/* list all possible characters, similar looking characters and vowels have been removed */
@@ -72,7 +72,7 @@ class CaptchaSecurityImages {
 }
 
 $width = isset($_GET['width']) ? $_GET['width'] : '100';
-$height = isset($_GET['height']) ? $_GET['height'] : '30';
+$height = isset($_GET['height']) ? $_GET['height'] : '40';
 $characters = isset($_GET['characters']) && $_GET['characters'] > 1 ? $_GET['characters'] : '4';
 
 $captcha = new CaptchaSecurityImages($width,$height,$characters);

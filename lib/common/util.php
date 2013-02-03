@@ -47,13 +47,19 @@ function check_not_empty($form_vars)
 }
 
 
-function valid_email($address) {
+function validate_email($address) {
   // check an email address is possibly valid
   if (ereg('^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$', $address)) {
     return true;
   } else {
     return false;
   }
+}
+
+
+function validate_email2($address)
+{
+	return filter_var($address , FILTER_VALIDATE_EMAIL);
 }
 
 
@@ -119,6 +125,26 @@ function log_error($level, $err_msg)
 		echo $err_msg; 
 		echo "<br \>";
 	} 
+}
+
+
+function send_activate_mail($uid, $username, $email, $token)
+{
+	$body = "$username, 你好!\n";
+	$body .= "感谢你注册新账户, 你使用的邮箱地址是: $email\n";
+	$body .= "请点击下面的链接完成验证:\n";
+	$body .= BASE_URL . 'user/activate.php?x=' . $uid . "&y=$token\n";
+	$body .= "如果邮箱里不能打开链接，也可以将它复制到浏览器地址栏里打开。\n";
+
+	$headers = "MIME-Version: 1.0\r\n";
+	$headers .= "Content-type: text/plain; charset=utf-8\r\n";
+	$headers .= "Content-Transfer-Encoding: 8bit\r\n";
+	$headers .= "From: admin@9dota.cn";
+
+	$subject = $username . ',请验证你在9dota上注册的Email';
+	$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
+
+	@mail($email, $subject, $body, $headers);
 }
 
 ?>

@@ -1,9 +1,9 @@
 
 <div id="content">
 	<div class="main">
-		<h1> 添加队伍 </h1>
 		
 		<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" class="basic-form">
+			<h1> 添加队伍 </h1>
 			<div class="field">
 				<label for="team_name" class="field-label">队伍名称:</label>
 				<input id="team_name" name="team_name" type="text" class="basic-input" maxlength="64" />	
@@ -48,10 +48,12 @@
 
 
 	<div class="aside">
-		<h2> 创建职业战队 · · ·  </h2>
+		<div class="item">
+			<h2> 创建职业战队 · · ·  </h2>
+		</div>
 	</div> <!-- aside -->
 
-	<div class="extra"> </div>
+	<div class="extra clearfix"> </div>
 
 </div> <!-- content -->
 

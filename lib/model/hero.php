@@ -42,10 +42,14 @@ class Hero
 
 	//技能数据
 	public $hero_skills;
+
+	//评论
+	public $hero_comment;
 	
 	public function __construct()
 	{
 		$this->hero_skills = array();
+		$this->hero_comment = array();
 	}
 
 

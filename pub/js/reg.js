@@ -29,31 +29,31 @@ function checkClick(e)
 	{
 		var email_desc = document.getElementById("email_desc");
 		email_desc.innerHTML = "请填写本人真实邮箱";
-		email_desc.className = "item_desc"; 
+		email_desc.className = "field-desc"; 
 	}
 	else if(me.name == "passwd1")
 	{
 		var passwd1_desc = document.getElementById("passwd1_desc");
 		passwd1_desc.innerHTML = "输入6-20位密码, 密码可以是字母和数字";
-		passwd1_desc.className = "item_desc";
+		passwd1_desc.className = "field-desc";
 	}
 	else if(me.name == "passwd2")
 	{
 		var passwd2_desc = document.getElementById("passwd2_desc");
 		passwd2_desc.innerHTML = "重新输入密码";
-		passwd2_desc.className = "item_desc"; 
+		passwd2_desc.className = "field-desc"; 
 	}
 	else if(me.name == "username")
 	{
 		var username_desc = document.getElementById("username_desc");
 		username_desc.innerHTML = "用户昵称支持中英文,最多8位中文或者16位英文"
-		username_desc.className = "item_desc";
+		username_desc.className = "field-desc";
 	}
 	else if(me.name == "captcha")
 	{
 		var username_desc = document.getElementById("captcha_desc");
 		username_desc.innerHTML = "输入4位验证码";
-		username_desc.className = "item_desc";
+		username_desc.className = "field-desc";
 	}
 }
 
@@ -65,17 +65,17 @@ function checkEmail(e)
 	if(email.value.length == 0)
 	{
 		email_desc.innerHTML = "邮箱不能为空";
-		email_desc.className = "item_desc_error";
+		email_desc.className = "field-desc-error";
 	}
 	else if(!/^[\w\.-_\+]+@[\w-]+(\.\w{2,4})+$/.test(email.value))
 	{
 		email_desc.innerHTML = "邮箱格式不正确";
-		email_desc.className = "item_desc_error";
+		email_desc.className = "field-desc-error";
 	}	
 	else
 	{
 		email_desc.innerHTML = "";
-		email_desc.className = "item_desc";
+		email_desc.className = "field-desc";
 
 		//如果不是表单提交的话做ajax检查
 		if(e != null)
@@ -103,7 +103,7 @@ function validateEmail()
 			{
 				var email_desc = document.getElementById("email_desc");
 				email_desc.innerHTML = "邮箱已经被使用";
-				email_desc.className = "item_desc_error";
+				email_desc.className = "field-desc-error";
 			}
 			else if(request.responseText == "ok")
 			{
@@ -123,29 +123,29 @@ function checkPasswd()
 	if(passwd1.value.length < 6)
 	{
 		passwd1_desc.innerHTML = "密码过短, 密码至少需要6位";
-		passwd1_desc.className = "item_desc_error";
+		passwd1_desc.className = "field-desc-error";
 	}
 	else if(passwd1.value.length > 20)
 	{
 		passwd1_desc.innerHTML = "密码过长，密码不能超过20位"; 
-		passwd1_desc.className = "item_desc_error";
+		passwd1_desc.className = "field-desc-error";
 	}
 	else if(!checkValidPasswd(passwd1.value))
 	{
 		passwd1_desc.innerHTML = "密码只能是字母,数字和符号";
-		passwd1_desc.className = "item_desc_error";
+		passwd1_desc.className = "field-desc-error";
 	}
 	else if(passwd2.value.length != 0 && passwd2.value != passwd1.value)
 	{
 			passwd2_desc.innerHTML = "密码不一致，请重新输入";
-			passwd2_desc.className = "item_desc_error";
+			passwd2_desc.className = "field-desc-error";
 	}
 	else
 	{
 		passwd1_desc.innerHTML = "";
-		passwd1_desc.className = "item_desc";
+		passwd1_desc.className = "field-desc";
 		passwd2_desc.innerHTML = "";
-		passwd2_desc.className = "item_desc";
+		passwd2_desc.className = "field-desc";
 		return true;
 	}
 	return false;
@@ -161,23 +161,23 @@ function checkUsername()
 	if(len > 16)
 	{
 		username_desc.innerHTML = "用户名过长, 最多8位中文或者16位英文";
-		username_desc.className = "item_desc_error";	
+		username_desc.className = "field-desc-error";	
 	}
 	else if(username.value.length == 0)
 	{
 		username_desc.innerHTML = "用户名不能为空";
-		username_desc.className = "item_desc_error";	
+		username_desc.className = "field-desc-error";	
 	}	
 	else if(!checkValidName(username.value))
 	{
 		username_desc.innerHTML = "用户名不合法，只能是英文，中文，数字和下划线";
-		username_desc.className = "item_desc_error";	
+		username_desc.className = "field-desc-error";	
 		
 	}
 	else
 	{
 		username_desc.innerHTML = "";
-		username_desc.className = "item_desc";	
+		username_desc.className = "field-desc";	
 		return true;
 	}
 	return false;
@@ -191,17 +191,17 @@ function checkCaptcha()
 	if(captcha.value.length != 4)
 	{
 		captcha_desc.innerHTML = "请输入4位验证码";
-		captcha_desc.className = "item_desc_error";
+		captcha_desc.className = "field-desc-error";
 	}
 	else if(!checkValidCaptcha(captcha.value))
 	{
 		captcha_desc.innerHTML = "验证码由小写字母和数字组成";
-		captcha_desc.className = "item_desc_error";
+		captcha_desc.className = "field-desc-error";
 	}
 	else
 	{
 		captcha_desc.innerHTML = "";
-		captcha_desc.className = "item_desc";
+		captcha_desc.className = "field-desc";
 		return true;
 	}
 	return false;
